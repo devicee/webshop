@@ -23,3 +23,24 @@ class ProductService:
             return product
 
         raise Http404
+
+    @staticmethod
+    def put(pk: int, request: dict):
+        product = ProductModel.objects.filter(pk=pk).first()
+        if product:
+            for data in request:
+                if data:
+                    setattr(product, data, request.get(data))
+                product.save()
+
+            return product
+
+        raise Http404
+
+    @staticmethod
+    def delete(pk: int):
+        product = ProductModel.objects.filter(pk=pk).exists()
+        if product:
+            return ProductModel.objects.filter(pk=pk).delete()
+
+        raise Http404

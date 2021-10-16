@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -15,11 +16,13 @@ class ProductCreateView(ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
-            product = ProductService.post(request=serializer.validated_data)
-            serializer = self.serializer_class(product)
+        if serializer.is_valid() is False:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            return Response(serializer.data)
+        product = ProductService.post(request=serializer.validated_data)
+        serializer = self.serializer_class(product)
+
+        return Response(serializer.data)
 
 
 class ProductView(RetrieveUpdateDestroyAPIView):
@@ -34,6 +37,26 @@ class ProductView(RetrieveUpdateDestroyAPIView):
         pk = kwargs.get(PK)
 
         product = ProductService.get(pk=pk)
-
         serializer = self.serializer_class(product)
+
         return Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        pk = kwargs.get(PK)
+        serializer = self.serializer_class(data=request.data, partial=True)
+
+        if serializer.is_valid() is False:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        product = ProductService.put(pk=pk, request=serializer.data)
+        serializer = ProductSerializer(product, partial=True)
+
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get(PK)
+
+        __ = ProductService.delete(pk=pk)
+
+        return Response()
+
