@@ -4,12 +4,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from webshopapi.constants import PK
-from webshopapi.serializers.product_serializer import ProductSerializer
+from webshopapi.serializers.product_serializer import ProductSerializer, ProductSerializerPost
 from webshopapi.service.product_service import ProductService
 
 
 class ProductCreateView(ListCreateAPIView):
-    serializer_class = ProductSerializer
+    serializer_class = ProductSerializerPost
     permission_classes = [AllowAny]
     http_method_names = ['post', ]
 
