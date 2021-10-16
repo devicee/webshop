@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    django-service:
+        build: .
+        container_name: django-app
+        command: python manage.py runserver 0.0.0.0:5000
+        volumes:
+            - .:/code
+        ports:
+            - "5000:5000"
+        depends_on:
+            - db-service
+    db-service:
+        image: 'postgres:latest'
+        ports:
+            - 5444:5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        volumes:
+            - ./data/db:/var/lib/postgresql/data
