@@ -15,6 +15,6 @@ class ProductsListView(ListCreateAPIView):
         return None
 
     def get(self, request, *args, **kwargs):
-        products = ProductService().list()
+        products = ProductService.list_products()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
