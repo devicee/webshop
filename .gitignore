@@ -12,3 +12,5 @@
 .idea/webshop .iml
 
 djangoconfig/__pycache__/
+
+*.pyc
