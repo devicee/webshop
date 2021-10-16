@@ -1,0 +1,26 @@
+[
+  {
+    "model": "webshopapi.productmodel",
+    "pk": 1,
+    "fields": {
+      "name": "Lavender heart",
+      "price": "9.25"
+    }
+  },
+  {
+    "model": "webshopapi.productmodel",
+    "pk": 2,
+    "fields": {
+      "name": "Personalised cufflinks",
+      "price": "45.00"
+    }
+  },
+  {
+    "model": "webshopapi.productmodel",
+    "pk": 3,
+    "fields": {
+      "name": "Kids T-shirt",
+      "price": "19.95"
+    }
+  }
+]
