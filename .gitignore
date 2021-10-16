@@ -10,3 +10,5 @@
 .idea/vcs.xml
 
 .idea/webshop .iml
+
+djangoconfig/__pycache__/
