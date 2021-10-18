@@ -1,4 +1,4 @@
-version: "3"
+version: "2.1"
 
 services:
     django-service:
@@ -10,7 +10,8 @@ services:
         ports:
             - "5000:5000"
         depends_on:
-            - db-service
+            db-service:
+                condition: service_healthy
     db-service:
         image: 'postgres:latest'
         ports:
@@ -21,3 +22,8 @@ services:
             POSTGRES_DB: postgres
         volumes:
             - ./data/db:/var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
